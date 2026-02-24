@@ -1,0 +1,13 @@
+{
+  "domain": "atmeex_cloud_fr1z2r",
+  "name": "Atmeex cloud fr1z2r",
+  "dependencies": [],
+  "documentation": "http://github.com/Fr1z2r/atmeex_hacs",
+  "requirements": [
+    "atmeexpy@git+https://github.com/Fr1z2r/atmeexpy.git@master"
+  ],
+  "codeowners": ["@anpavlov"],
+  "issue_tracker": "http://github.com/Fr1z2r/atmeex_hacs/issues",
+  "config_flow": true,
+  "version": "0.1.3"
+}
