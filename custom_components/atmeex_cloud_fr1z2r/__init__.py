@@ -26,12 +26,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     hass.data[DOMAIN][entry.entry_id] = coordinator
     await coordinator.async_refresh()
 
-    for platform in PLATFORMS:
-        hass.async_create_task(
-            hass.config_entries.async_forward_entry_setup(
-                entry, platform
-            )
+    hass.async_create_task(
+        hass.config_entries.async_forward_entry_setups(
+            entry, PLATFORMS
         )
+    )
+
     return True
 
 class AtmeexDataCoordinator(DataUpdateCoordinator):
@@ -55,8 +55,8 @@ class AtmeexDataCoordinator(DataUpdateCoordinator):
         if self.entry.data[CONF_ACCESS_TOKEN] != self.api.auth._access_token or \
             self.entry.data[CONF_REFRESH_TOKEN] != self.api.auth._refresh_token:
 
-            data = self.entry.data
-            data[CONF_ACCESS_TOKEN] = self.api.auth._access_token
-            data[CONF_REFRESH_TOKEN] = self.api.auth._refresh_token
+            new_data = {**self.entry.data}
+            new_data[CONF_ACCESS_TOKEN] = self.api.auth._access_token
+            new_data[CONF_REFRESH_TOKEN] = self.api.auth._refresh_token
 
-            await self.hass.config_entries.async_update_entry(self.entry, data=data)
+            await self.hass.config_entries.async_update_entry(self.entry, data=new_data)
