@@ -39,6 +39,10 @@ class AtmeexClimateEntity(CoordinatorEntity, ClimateEntity):
         self.coordinator = coordinator
         self.device = device
 
+        self._attr_unique_id = f"{device.model.id}_{device.model.model}"
+        self._attr_has_entity_name = True
+        self._attr_name = f"{device.model.name} {device.model.model}"
+
         self._last_mode = None
         self._update_state()
 
